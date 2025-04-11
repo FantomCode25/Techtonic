@@ -1,7 +1,8 @@
-module.exports = {
+/** @type {import('tailwindcss').Config} */
+export default {
   content: [
-    './src/**/*.{html,js,jsx,ts,tsx}', // Tailwind will scan these files for classes
-    './public/index.html', // Include your public folder or any other location where HTML is used
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {},
