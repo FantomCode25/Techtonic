@@ -6,6 +6,12 @@ const rootRouter = require("./routes/index")
 const app = express();
 
 app.use(cors());
+
+// CORS middleware — add this BEFORE routes
+// app.use(cors({
+//     origin: "http://localhost:5173",
+//     credentials: true
+//   }));
 app.use(express.json());  
 
 app.use("/api/v1", rootRouter);
