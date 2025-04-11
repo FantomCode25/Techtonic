@@ -1,16 +1,19 @@
-const mongoose = require ("mongoose");
+const mongoose = require('mongoose');
 
-mongoose.connect("") 
+mongoose.connect("mongodb+srv://admin:NQTRj8MZl5o88N2o@cluster0.7qkjke1.mongodb.net/FairGadi")
+  .then(() => {
+    console.log("Connected to MongoDB successfully");
+  })
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
+  });
 
 
 const userSchema = new mongoose.Schema({
-    username: String,
-    firstname: String,
-    lastname: String,
-    password: String,
-
-})
-
+  name: String,
+  email: { type: String, unique: true },
+  password: String
+});
 
 const User = mongoose.model('User', userSchema);
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Map } from "../components/Map";
 import { CabList } from "../components/CabList";
-// import { fetchFareEstimates } from "../api/fare";
+import { fetchFareEstimates } from "../api/fare";
 
 export function Home() {
   const [pickup, setPickup] = useState(null);

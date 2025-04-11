@@ -1,108 +1,77 @@
 const express = require("express");
-const zod = require("zod");
+const {loginSchema, signupSchema} = require("../zod");
 const jwt = require("jsonwebtoken")
 const { JWT_SECRET } = require("../config");
 const { authMiddleware } = require("../middleware");
 const { User } = require("../db");
 const userRouter = express.Router();
+const bcrypt = require('bcryptjs');
 
-const signupSchema = zod.object({
-    username: zod.string().email(),
-    firstname: zod.string(),
-    lastname: zod.string(),
-    password: zod.string().min(6)
-})
+
 
 userRouter.post("/signup", async (req,res) => {
-    const createPayload = req.body;
-    const parsedPayload = signupSchema.safeParse(createPayload);
-    if(!parsedPayload){
-        return res.status(411).json({
-            message: "Email already taken / Incorrect inputs"
-        })
-    }
-    const existingUser = await User.findOne({
-        username: createPayload.username
-    })
-    if(existingUser){
-        return res.status(411).json({
-            message: "Email already taken / Incorrect inputs"
-        })
-    }
-    const user = await User.create({
-        username: createPayload.username,
-        firstname: createPayload.firstname,
-        lastname: createPayload.lastname,
-        password: createPayload.password
-    })
-    const userId = user._id;
+    try {
+        console.log('first');
+        const { name, email, password } = signupSchema.parse(req.body);
+        console.log('second');
+        const existingUser = await User.findOne({ email });
+        if (existingUser) 
+            return res.status(400).json({ error: "Email already exists" });
+        
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = await User.create({ name, email, password: hashedPassword });
     
-    const token = jwt.sign({
-        userId
-    }, JWT_SECRET);
-
-    res.json({
-        message: "user created successfully",
-        token: token
-    })
-})
-
-const signinSchema = zod.object({
-    username: zod.string().email(),
-    password: zod.string()
-})
-
-userRouter.post("/signin", async(req, res) => {
-    const createPayload = req.body;
-    const updatePayload = signinSchema.safeParse(createPayload);
-    if(!updatePayload){
-        return res.status(411).json({
-            message: "incorrect inputs"
-        })
-    }
-    const user = await User.findOne({   
-        username: createPayload.username,
-        password: createPayload.password
+        const token = jwt.sign({ userId: newUser._id }, JWT_SECRET);
+        res.status(201).json({ token, user: { name: newUser.name, email: newUser.email } });
+      } catch (err) {
+        res.status(400).json({ error: err.message });
+      }
     })
 
-    if(user){
-        const token = jwt.sign({
-            userId: user._id
-            
-        }, JWT_SECRET)
+userRouter.post("/signin", async (req, res) => {
+        try {
+          const { email, password } = loginSchema.parse(req.body);
+          const user = await User.findOne({ email });
+          if (!user) return res.status(400).json({ error: "Invalid credentials" });
+      
+          const isMatch = await bcrypt.compare(password, user.password);
+          if (!isMatch) return res.status(400).json({ error: "Invalid credentials" });
+      
+          const token = jwt.sign({ userId: user._id }, JWT_SECRET);
+          res.json({ token, user: { name: user.name, email: user.email } });
+          console.log('signed in')
+        } catch (err) {
+          res.status(400).json({ error: err.message });
+        }
+      })
 
-        res.json({
-            token: token
-        })
-        return;
-    }
-    res.status(411).json({
-        message: "Error while logging in"
-    })
-})
 
-const updateUser = zod.object({
-    password: zod.string().optional(),
-    firstname: zod.string().optional(),
-    lastname: zod.string().optional()
-})
-
-userRouter.put("/", authMiddleware, async(req, res) => {
-    const updateBody = req.body;
-    const { success } = updateUser.safeParse(updateBody);
-    if(!success) {
-        return res.status(411).json({
-            message: "error while updating information"
-        })
-    }
-    // upadting the user according to parameters passed based on id
-    
-    await User.updateOne({_id: req.userId}, req.body) 
-
-        return res.status(200).json({
-            message: "Updated the details successfully"
-    })
-})
 
 
 module.exports = userRouter;
+
+// const updateUser = zod.object({
+//     password: zod.string().optional(),
+//     firstname: zod.string().optional(),
+//     lastname: zod.string().optional()
+// })
+
+// userRouter.put("/", authMiddleware, async(req, res) => {
+//     const updateBody = req.body;
+//     const { success } = updateUser.safeParse(updateBody);
+//     if(!success) {
+//         return res.status(411).json({
+//             message: "error while updating information"
+//         })
+//     }
+//     // upadting the user according to parameters passed based on id
+    
+//     await User.updateOne({_id: req.userId}, req.body) 
+
+//         return res.status(200).json({
+//             message: "Updated the details successfully"
+//     })
+// })
+
+
+// module.exports = userRouter;
