@@ -33,26 +33,104 @@ const getDistanceAndDuration = async (source, destination) => {
 };
 
 const calculateFares = (distance, duration) => {
+  const now = new Date();
+  const hour = now.getHours();
+  const isNight = hour >= 22 || hour < 6;
+  const isPeakHour = (hour >= 8 && hour < 11) || (hour >= 17 && hour < 20);
+
+  const nightSurchargeRate = 0.2; // 20%
+  const peakSurchargeRate = 0.15; // 15%
+
+  const getSurgeMultiplier = () => {
+    const surgeProb = Math.random();
+    if (surgeProb > 0.85) return 1.5;
+    if (surgeProb > 0.6) return 1.25;
+    return 1;
+  };
+
+  const applyModifiers = (baseFare) => {
+    let finalFare = baseFare;
+
+    if (isNight) finalFare *= 1 + nightSurchargeRate;
+    if (isPeakHour) finalFare *= 1 + peakSurchargeRate;
+
+    finalFare *= getSurgeMultiplier();
+
+    return +finalFare.toFixed(2);
+  };
+
   return [
+    // Uber
     {
       provider: 'Uber',
       type: 'Auto',
-      fare: +(30 + distance * 9 + duration * 1.5).toFixed(2),
+      fare: applyModifiers(35 + distance * 13 + duration * 1.5),
+    },
+    {
+      provider: 'Uber',
+      type: 'Bike',
+      fare: applyModifiers(25 + distance * 10 + duration * 1.2),
+    },
+    {
+      provider: 'Uber',
+      type: 'Sedan',
+      fare: applyModifiers(50 + distance * 14 + duration * 2.2),
+    },
+    {
+      provider: 'Uber',
+      type: 'XL',
+      fare: applyModifiers(90 + distance * 18 + duration * 3),
+    },
+
+    // Ola
+    {
+      provider: 'Ola',
+      type: 'Auto',
+      fare: applyModifiers(30 + distance * 12 + duration * 1.4),
+    },
+    {
+      provider: 'Ola',
+      type: 'Bike',
+      fare: applyModifiers(24 + distance * 9 + duration * 1.1),
     },
     {
       provider: 'Ola',
       type: 'Sedan',
-      fare: +(50 + distance * 10 + duration * 2).toFixed(2),
+      fare: applyModifiers(55 + distance * 14 + duration * 2.3),
     },
+    {
+      provider: 'Ola',
+      type: 'XL',
+      fare: applyModifiers(85 + distance * 17 + duration * 2.8),
+    },
+
+    // Rapido
     {
       provider: 'Rapido',
       type: 'Bike',
-      fare: +(20 + distance * 8 + duration * 1).toFixed(2),
+      fare: applyModifiers(22 + distance * 9 + duration * 1),
     },
+    {
+      provider: 'Rapido',
+      type: 'Auto',
+      fare: applyModifiers(32 + distance * 11.5 + duration * 1.3),
+    },
+    {
+      provider: 'Rapido',
+      type: 'Sedan',
+      fare: applyModifiers(48 + distance * 13.5 + duration * 2.4),
+    },
+    {
+      provider: 'Rapido',
+      type: 'XL',
+      fare: applyModifiers(82 + distance * 17.5 + duration * 2.9),
+    },
+
+    // Namma Yatri
     {
       provider: 'Namma Yatri',
       type: 'Auto',
-      fare: +(25 + distance * 7.5 + duration * 1.2).toFixed(2),
+      fare: applyModifiers(28 + distance * 11.5 + duration * 1.2),
     },
   ];
 };

@@ -1,5 +1,15 @@
 import React from 'react';
-import { Car } from 'lucide-react';
+import uberLogo from '../assets/uber.svg';
+import olaLogo from '../assets/Ola-logo.svg';
+import rapidoLogo from '../assets/NewLogo.svg';
+import nammaYatriLogo from '../assets/nammaYatrilogo.svg';
+
+const providerLogos = {
+  'Uber': uberLogo,
+  'Ola': olaLogo,
+  'Rapido': rapidoLogo,
+  'Namma Yatri': nammaYatriLogo,
+};
 
 export function CabList({ prices }) {
   return (
@@ -15,7 +25,11 @@ export function CabList({ prices }) {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="bg-gray-100 dark:bg-gray-700 p-2 rounded-full">
-                <Car className="h-6 w-6 text-primary-600 dark:text-primary-400" />
+                <img
+                  src={providerLogos[cab.provider]}
+                  alt={`${cab.provider} Logo`}
+                  className="h-6 w-6 object-contain"
+                />
               </div>
               <div>
                 <h3 className="font-semibold dark:text-white">{cab.provider}</h3>
@@ -24,7 +38,7 @@ export function CabList({ prices }) {
             </div>
             <div className="text-right">
               <p className="text-lg font-bold text-gray-900 dark:text-white">₹{cab.fare}</p>
-              <p className="text-sm text-gray-600 dark:text-gray-300">{cab.duration} mins</p>
+              {/* <p className="text-sm text-gray-600 dark:text-gray-300">{cab.duration} mins</p> */}
             </div>
           </div>
         </div>

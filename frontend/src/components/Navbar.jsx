@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Car, Moon, Sun } from 'lucide-react';
+import { Car, CarFront, Moon, Sun } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
+import rentCarGif from '../assets/rent-car.gif'; // adjust path if needed
+import carLogo from '../assets/rent-car.png';
+
+
 
 export function Navbar() {
   const location = useLocation();
@@ -16,8 +20,9 @@ export function Navbar() {
             to="/"
             className="flex items-center space-x-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300"
           >
-            <Car className="h-8 w-8" />
-            <span className="text-2xl font-bold">FairGadi</span>
+            <CarFront className="h-8 w-8 text-blue-500" />
+            {/* <img src={carLogo} alt="FairGadi Logo" className="h-16 w-16"/> */}
+            <span className="text-2xl font-bold text-blue-500">FairGadi</span>
           </Link>
 
           <div className="flex items-center space-x-4">
@@ -38,7 +43,7 @@ export function Navbar() {
                 </Link>
                 <Link
                   to="/signup"
-                  className="px-4 py-2 bg-primary-600 dark:bg-primary-500 text-white rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors font-medium"
+                  className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium"
                 >
                   Sign Up
                 </Link>
