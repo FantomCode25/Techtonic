@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Car, CarFront, Moon, Sun } from 'lucide-react';
+import { CarFront, Moon, Sun } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
-import rentCarGif from '../assets/rent-car.gif'; // adjust path if needed
+import rentCarGif from '../assets/rent-car.gif'; 
 import carLogo from '../assets/rent-car.png';
 
 
@@ -20,7 +20,7 @@ export function Navbar() {
             to="/"
             className="flex items-center space-x-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300"
           >
-            <CarFront className="h-8 w-8 text-blue-500" />
+            <CarFront className="h-8 w-8 text-blue-600" />
             {/* <img src={carLogo} alt="FairGadi Logo" className="h-16 w-16"/> */}
             <span className="text-2xl font-bold text-blue-500">FairGadi</span>
           </Link>

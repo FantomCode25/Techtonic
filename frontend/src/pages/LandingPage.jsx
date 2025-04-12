@@ -16,7 +16,7 @@ export function LandingPage() {
           </p>
           <Link
   to="/signin"
-  className="inline-block bg-primary-600 dark:bg-primary-500 text-white px-8 py-4 rounded-lg font-semibold border border-white/70 hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors"
+  className="inline-block bg-primary-600 dark:bg-primary-500 px-8 py-4 rounded-lg font-semibold border border-blue/90 hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium"
 >
   Get Started
 </Link>
