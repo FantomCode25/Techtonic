@@ -86,7 +86,7 @@ async def predict_surge(request: PredictionRequest):
     # If surge, predict when surge will happen in minutes
     if surge_prediction[0] == 1:
         time_to_surge = random.randint(1, 10)  # Random surge prediction (between 1-10 minutes)
-        return {"prediction": "Surge Period", "minutes_until_drop": time_to_surge}
+        return {"surge": "Surge Period", "minutes_to_surge": time_to_surge}
     else:
-        return {"prediction": "No Surge", "minutes_until_drop": None}
+        return {"surge": "No Surge", "minutes_to_surge": None}
 
