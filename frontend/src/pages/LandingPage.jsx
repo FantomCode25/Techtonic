@@ -5,7 +5,6 @@ import { CarTaxiFront, ShieldCheck, Hourglass, HeartHandshake } from 'lucide-rea
 export function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
-      {/* Hero Section */}
       <div className="container mx-auto px-4 pt-20 pb-16">
         <div className="text-center">
           <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-6">
@@ -24,17 +23,15 @@ export function LandingPage() {
         </div>
       </div>
 
-      {/* Features Section */}
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="relative group">
-            {/* Glowing border element */}
+
             <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0 
                         bg-[radial-gradient(300px_circle_at_center,_rgba(59,130,246,0.4),_transparent)] 
                         group-hover:bg-[radial-gradient(300px_circle_at_center,_rgba(59,130,246,0.6),_transparent)]
                         blur-xl animate-glowing-shadow"></div>
 
-            {/* Content card */}
           <div className="relative bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md border border-transparent 
                         group-hover:border-blue-500/20 dark:group-hover:border-blue-400/30
                         hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out z-10">
@@ -45,7 +42,6 @@ export function LandingPage() {
           </p>
           </div>
           </div>
-          {/* Card 1 - Real-Time Prices */}
 <div className="relative group">
   <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0 
               bg-[radial-gradient(300px_circle_at_center,_rgba(59,130,246,0.4),_transparent)] 
@@ -60,7 +56,6 @@ export function LandingPage() {
   </div>
 </div>
 
-{/* Card 2 - Best Deals */}
 <div className="relative group">
   <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0 
               bg-[radial-gradient(300px_circle_at_center,_rgba(59,130,246,0.4),_transparent)] 
