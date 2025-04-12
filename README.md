@@ -68,7 +68,7 @@ With the use of data, we’ve quickly validated our approach without the overhea
 ---
 
 ## 🧩 Architecture / Diagram (if any)
-![Architecture of our web application](../FairGadi/frontend/src/assets/architecture.png)
+![Architecture of our web application](./architecture.png)
 
 ---
 
